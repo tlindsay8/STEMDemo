@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Traffic Light Mission</title>
+	<link rel="stylesheet" type="text/css" href="/style/style.css">
+
+</head>
+	<body>
+		<h2> Traffic Light Mission </h2>
+		<p> When penetrating a system, a hacker is generally looking to do one of these five hacks, also known as D5.  Deceieve, Disrupt, Degrade, Deny and Destroy.  Check out how these hacks affect the traffic light.  Start with hack1 and go from there. </p>
+		<div class="body">
+			
+			<div id="broke">
+				<img src="/pictures/brokeLight.png" alt="Broke Light"/>
+			</div>
+			<div id="red">
+				<img src="/pictures/redLight.png" alt="Red Light"/>
+			</div>
+			<div id="yellow">
+				<img src="/pictures/yellowLight.png" alt="Yellow Light"/>
+			</div>
+			<div id="green">
+				<img src="/pictures/greenLight.png" alt="Green Light"/> 
+			</div>
+			<span id="deny"> THE SYSTEM IS MINE NOW!! </span>
+		
+			<div>
+				<button onclick="runRegularLight()">Regular Light</button>
+				<button onclick="runDeceive()">Hack1</button>
+				<button onclick="runDisrupt()">Hack2</button>
+				<button onclick="runDeny()">Hack3</button>
+				<button onclick="runDegrade()">Hack4</button>
+				<button onclick="runDestroy()">Hack5</button>
+			</div>
+			
+
+		</div>
+
+			<div>
+				<span id="deceive">Hack1 is deceive.  The lights are not matching the user interface therefore we have decieved the user into thinking nothing is wrong with the machine.  We now have control of the light while the owner has no reason to think anything is wrong.</span>
+				<span id="disrupt">Hack2 is disrupt.  We have not put anyone in danger by making the lights go red, but we are slowing things down.</span>
+				<span id="deny1">Hack3 is deny.  We have no longer allowed the user to access the system, so we decided to speed up the lights.</span>
+				<span id="degrade">Hack4 is degrade.  Over time we stopped the yellow light from working and now there is only a red and green light.</span>
+				<span id="destroy">Hack5 is destroy.  We shut it down completely.</span>
+			</div>
+		<script>
+			var runRegular;
+			var deceive;
+			var runRegularHack;
+			var disrupt;
+			var rundisrupt;
+			var rundeny;
+			var rundegrade;
+			var rundestroy;
+			var ws = new WebSocket('ws://localhost:8081');
+			ws.onopen = function () {
+				console.log('websocket is open');
+			}
+
+
+			function regularLight(){
+				redLight();
+				setTimeout(greenLight, 2000);
+				setTimeout(yellowLight, 6000);
+			}
+			function Deceive(){
+				redLightHack();
+				setTimeout(greenLightHack, 2000);
+				setTimeout(yellowLightHack, 6000);
+			}
+			function runRegularLight(){
+				clearInterval(runRegularHack);
+				clearInterval(runDisrupt);
+				clearInterval(rundeny);
+				clearInterval(rundegrade);
+				clearInterval(rundestroy);
+				runRegular = setInterval(regularLight, 10000);
+				document.getElementById("deceive").style.display = "none";
+				document.getElementById("deny").style.display = "none";
+				document.getElementById("degrade").style.display = "none";
+				document.getElementById("destroy").style.display = "none";
+				document.getElementById("disrupt").style.display = "none";
+				document.getElementById("deny1").style.display = "none";
+				
+			}
+			function runDeceive(){
+				clearInterval(runRegular);
+				clearInterval(rundisrupt);
+				clearInterval(rundeny);
+				clearInterval(rundegrade);
+				clearInterval(rundestroy);
+				runRegularHack = setInterval(Deceive, 10000);
+				document.getElementById("deceive").style.display = "block";
+				document.getElementById("deny").style.display = "none";
+				document.getElementById("degrade").style.display = "none";
+				document.getElementById("destroy").style.display = "none";
+				document.getElementById("disrupt").style.display = "none";
+				document.getElementById("deny1").style.display = "none";
+			}
+			function Disrupt(){
+				redLight();
+				setTimeout(brokeLight,1000);
+				setTimeout(redLight,2000);
+			}
+			function runDisrupt(){
+				clearInterval(runRegularHack);
+				clearInterval(runRegular);
+				clearInterval(rundeny);
+				clearInterval(rundegrade);
+				clearInterval(rundestroy);
+				rundisrupt = setInterval(Disrupt, 2000);
+				document.getElementById("deceive").style.display = "none";
+				document.getElementById("deny").style.display = "none";
+				document.getElementById("degrade").style.display = "none";
+				document.getElementById("destroy").style.display = "none";
+				document.getElementById("disrupt").style.display = "block";
+				document.getElementById("deny1").style.display = "none";
+			}
+			function Deny(){
+				redLight();
+				setTimeout(greenLight, 500);
+				setTimeout(yellowLight, 1000);
+			}
+			function runDeny(){
+				clearInterval(runRegularHack);
+				clearInterval(runRegular);
+				clearInterval(rundisrupt);
+				clearInterval(rundegrade);
+				clearInterval(rundestroy);
+				rundeny = setInterval(Deny, 2000);
+				document.getElementById("deceive").style.display = "none";
+				document.getElementById("deny").style.display = "block";
+				document.getElementById("degrade").style.display = "none";
+				document.getElementById("destroy").style.display = "none";
+				document.getElementById("disrupt").style.display = "none";
+				document.getElementById("deny1").style.display = "block";
+			}
+			function Degrade(){
+				redLight();
+				setTimeout(greenLight,1000);
+				setTimeout(redLight, 2000);
+			}
+			function runDegrade(){
+				clearInterval(runRegularHack);
+				clearInterval(runRegular);
+				clearInterval(rundisrupt);
+				clearInterval(rundeny);
+				clearInterval(rundestroy);
+				rundegrade = setInterval(Degrade, 2000);
+				document.getElementById("deceive").style.display = "none";
+				document.getElementById("deny").style.display = "none";
+				document.getElementById("degrade").style.display = "block";
+				document.getElementById("destroy").style.display = "none";
+				document.getElementById("disrupt").style.display = "none";
+				document.getElementById("deny1").style.display = "none";
+
+			}
+			function Destroy(){
+				brokeLight();
+
+			}
+			function runDestroy(){
+				clearInterval(runRegularHack);
+				clearInterval(runRegular);
+				clearInterval(rundisrupt);
+				clearInterval(rundeny);
+				clearInterval(rundegrade);
+				rundestroy = setInterval(Destroy, 2000);
+				document.getElementById("deceive").style.display = "none";
+				document.getElementById("deny").style.display = "none";
+				document.getElementById("degrade").style.display = "none";
+				document.getElementById("destroy").style.display = "block";
+				document.getElementById("disrupt").style.display = "none";
+				document.getElementById("deny1").style.display = "none";
+			}
+			function redLight(){
+				document.getElementById("red").style.display = "block";
+				document.getElementById("broke").style.display = "none";
+				document.getElementById("yellow").style.display = "none";
+				document.getElementById("green").style.display = "none";
+				console.log('red light')
+				var x = {light:"red"};
+				var y = JSON.stringify(x);
+				ws.send(y);
+			}
+			function yellowLight(){
+				document.getElementById("yellow").style.display = "block";
+				document.getElementById("red").style.display = "none";
+				document.getElementById("broke").style.display = "none";
+				document.getElementById("green").style.display = "none";
+				console.log('yellow');
+				var x = {light:"yellow"};
+				var y = JSON.stringify(x);
+				ws.send(y);
+				
+			}
+			function greenLight(){
+				document.getElementById("green").style.display = "block";
+				document.getElementById("red").style.display = "none";
+				document.getElementById("broke").style.display = "none";
+				document.getElementById("yellow").style.display = "none";
+				console.log('green');
+				var x = {light:"green"};
+				var y = JSON.stringify(x);
+				ws.send(y);
+			}
+			function brokeLight(){
+				document.getElementById("broke").style.display = "block";
+				document.getElementById("red").style.display = "none";
+				document.getElementById("yellow").style.display = "none";
+				document.getElementById("green").style.display = "none";
+				var x = {light:"broke"};
+				var y = JSON.stringify(x);
+				ws.send(y);
+
+			}
+
+			function redLightHack(){				
+				document.getElementById("red").style.display = "block";
+				document.getElementById("broke").style.display = "none";
+				document.getElementById("yellow").style.display = "none";
+				document.getElementById("green").style.display = "none";
+				console.log('red light hack')
+				var x = {light:"green"};
+				var y = JSON.stringify(x);
+				ws.send(y);
+			}
+			function yellowLightHack(){
+				document.getElementById("yellow").style.display = "block";
+				document.getElementById("red").style.display = "none";
+				document.getElementById("broke").style.display = "none";
+				document.getElementById("green").style.display = "none";
+				console.log('yellow light hack');
+				var x = {light:"red"};
+				var y = JSON.stringify(x);
+				ws.send(y);
+			}
+			function greenLightHack(){
+				document.getElementById("green").style.display = "block";
+				document.getElementById("red").style.display = "none";
+				document.getElementById("broke").style.display = "none";
+				document.getElementById("yellow").style.display = "none";
+				console.log('green light hack');
+				var x = {light:"yellow"};
+				var y = JSON.stringify(x);
+				ws.send(y);
+			}
+				
+
+
+		</script>
+
+			
+
+
+	</body>
+
+
+
+</html>
+
